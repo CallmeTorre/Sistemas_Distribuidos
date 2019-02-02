@@ -17,4 +17,6 @@ int main(){
 
     cout << "La altura del edificio es: ";
     cout << altura << " metros" << endl;
+
+    return 0;
 }

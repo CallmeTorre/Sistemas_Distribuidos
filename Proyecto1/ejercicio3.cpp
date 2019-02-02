@@ -18,4 +18,6 @@ int main(){
 
     cout << "Como resultado tenemos: ";
     cout << horas << " horas " << minutos << " minutos " << segundos << " segundos." << endl;
+
+    return 0;
 }
