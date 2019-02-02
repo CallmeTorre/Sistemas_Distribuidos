@@ -14,4 +14,6 @@ int main(){
 
     cout << "Variable con dos decimales: ";
     cout << precio << endl;
+
+    return 0;
 }

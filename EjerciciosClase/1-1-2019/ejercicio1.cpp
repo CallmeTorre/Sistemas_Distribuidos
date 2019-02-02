@@ -15,4 +15,6 @@ int main(){
 
     cout << "El area del circulo es: ";
     cout << area << endl;
+
+    return 0;
 }

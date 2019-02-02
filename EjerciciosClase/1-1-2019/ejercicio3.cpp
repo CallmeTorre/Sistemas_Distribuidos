@@ -11,4 +11,6 @@ int main(){
     farenheit = ((9 * celsius)/5) + 32.0;
 
     cout << farenheit << endl;
+
+    return 0;
 }
