@@ -53,8 +53,7 @@ void PoligonoIrregular::imprimeVertices(){
     std::vector<Coordenada>::iterator i;
     cout << "Vertices: " << endl;
     for(i = vertices.begin(); i != vertices.end(); i++){
-        cout << "x = " << (*i).obtenerX() << " y= " << (*i).obtenerY() << endl;
-        cout << "magnitud = " << (*i).obtenerMagnitud() << endl;
+        cout << "x = " << (*i).obtenerX() << " y= " << (*i).obtenerY() << " magnitud = " << (*i).obtenerMagnitud()<< endl;
     }
 }
 
@@ -62,27 +61,68 @@ void PoligonoIrregular::ordenaA(){
     std::sort(vertices.begin(), vertices.end());
 }
 
-vector<int> genRandom(){
-    vector<int> randvector(200);
-    for(int i = -100;i < 0; i++){
-        randvector.push_back(i);
-    }
-    for(int j = 1; j < 100; j++){
-        randvector.push_back(j);
-    }
-    return randvector;
-}
-
 int main(){
     PoligonoIrregular poligono;
-    vector<int> randvector = genRandom();
-    for(int i = 0; i < 20; i++){
-        int coord1 = randvector[rand() % randvector.size()];
-        int coord2 = randvector[rand() % randvector.size()];
-        int magnitud = sqrt(pow(coord1, 2) + pow(coord2, 2));
-        poligono.anadeVertice(Coordenada(coord1, coord2, magnitud));
+
+    srand(time(NULL));
+
+    int i;
+	for ( i = 0; i < 5; ++i)
+	{	
+		double x=0,y=0;
+		float r1, r2, r3, r4;
+		r1=rand()%200+(-99); r2=rand()%1000; r3=rand()%1000; r4=rand()%200+(-99);
+		if(r2<=100){
+			while(r2<=100){
+				r2=rand()%1000;
+				if(((int)r2%100)==0 || ((int)r2%10)==0){
+					while(((int)r2%100)==0 || ((int)r2%10)==0){
+						r2=rand()%1000;
+					}
+				}
+			}
+		}else{
+			if(((int)r2%100)==0 || ((int)r2%10)==0){
+				while(((int)r2%100)==0 || ((int)r2%10)==0){
+					r2=rand()%1000;
+				}
+			}			
+		}
+		
+		if(r3<=100){
+			while(r3<=100){
+				r3=rand()%1000;
+				if(((int)r3%100)==0 || ((int)r3%10)==0){
+					while(((int)r3%100)==0 || ((int)r3%10)==0){
+						r3=rand()%1000;
+					}
+				}
+			}
+		}else{
+			if(((int)r3%100)==0 || ((int)r3%10)==0){
+				while(((int)r3%100)==0 || ((int)r3%10)==0){
+					r3=rand()%1000;
+				}
+			}			
+		}		
+		r2=r2/1000; r3=r3/1000;
+		if(r1<0){
+			x=r1+(-r2);
+		}else{
+			x=r1+r2;
+		}
+		
+		if(r4<0){
+			y=r4+(-r3);
+		}else{
+			y=r4+r3;
+		}
+        float magnitud = sqrt(pow(x, 2) + pow(y, 2));
+        poligono.anadeVertice(Coordenada(x, y, magnitud));
     }
+    poligono.imprimeVertices();
     poligono.ordenaA();
+    cout << "-----------------------------";
     poligono.imprimeVertices();
     return 0;
 } 
