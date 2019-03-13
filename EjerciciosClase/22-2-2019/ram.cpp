@@ -23,9 +23,10 @@ int countOcurrencies(string line){
 }
 
 int main(){
+    srand(time(NULL));
     string line;
     int n;
-    for(int j = 0; j < 10000; j++){
+    for(int j = 0; j < 100000000; j++){
         if(j == 0){
             line += genWord();
         }
