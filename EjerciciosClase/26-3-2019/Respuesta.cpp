@@ -8,16 +8,15 @@
 
 Respuesta::Respuesta(int pl)
 {
-	int p=pl;
-	socketlocal = new SocketDatagrama(p);
+	socketlocal = new SocketDatagrama(pl);
 }
 
 struct mensaje* Respuesta::getRequest(void){
 	PaqueteDatagrama datagrama = PaqueteDatagrama(sizeof(struct mensaje));
 	socketlocal->recibe(datagrama);
-	printf("Peticion recibida...\n");
 	struct mensaje* peticionCliente = (struct mensaje*)datagrama.obtieneDatos();
 	peticionCliente->puerto=datagrama.obtienePuerto();
+	printf("Peticion recibida de %s:%d\n",peticionCliente->IP, peticionCliente->puerto);
 	memcpy(peticionCliente->IP, datagrama.obtieneDireccion(), strlen(datagrama.obtieneDireccion()));
 	return peticionCliente;
 }
@@ -28,8 +27,9 @@ void Respuesta::sendReply(char *respuesta, char *ipCliente, int puertoCliente){
 	men.requestId=1;
 	memcpy(men.IP,ipCliente, strlen(ipCliente)+1);
 	men.puerto=puertoCliente;
-	men.operationId=100000;
+	men.operationId=2;
 	memcpy(men.arguments, respuesta, strlen(respuesta)+1);
 	PaqueteDatagrama datagramaReply = PaqueteDatagrama((char *)&men, sizeof(men), ipCliente, puertoCliente);
-	printf("Envia respuesta...Bytes enviados: %d\n", socketlocal->envia(datagramaReply));
+	printf("Enviando Respuesta\n");
+	printf("Bytes enviados: %d\n", socketlocal->envia(datagramaReply));
 }
