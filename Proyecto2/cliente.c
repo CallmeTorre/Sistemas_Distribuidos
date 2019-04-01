@@ -10,7 +10,8 @@ int puerto = 7200;
 int main(void)
 {
     struct sockaddr_in msg_to_server_addr, client_addr;
-    int s, num, res,a;
+    int s, num;
+    float res;
 
     s = socket(AF_INET, SOCK_DGRAM, 0);
     /* rellena la dirección del servidor */
@@ -28,13 +29,16 @@ int main(void)
     client_addr.sin_port = htons(0);
     bind(s, (struct sockaddr *)&client_addr,sizeof(client_addr));
 
-    for(num = 1; num <= 5; num ++){
+    for(num = 1; num <= 25; num++){
         sendto(s, (int *)&num, sizeof(int), 0, (struct sockaddr *) &msg_to_server_addr, sizeof(msg_to_server_addr));
     }
+    num = 0;
+    sendto(s, (int *)&num, sizeof(int), 0, (struct sockaddr *) &msg_to_server_addr, sizeof(msg_to_server_addr));
 
     /* se bloquea esperando respuesta */
     recvfrom(s, (int *)&res, sizeof(int), 0, NULL, NULL);
-    printf("%d\n",res);
-
+    printf("Paquetes perdidos: %f\n",res);
+    printf("Porcentaje de paquetes enviados: %f\n", 100 - (res * 100) / 25);
     close(s);
+    return 0;
 }
