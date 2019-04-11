@@ -1,18 +1,19 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <netinet/in.h>
 #include <netdb.h>
 #include <strings.h>
 
 int puerto = 7200;
 
-int main(void)
+int main(int argc, char *argv[])
 {
     struct sockaddr_in msg_to_server_addr, client_addr;
-    int s, num;
+    int s, num, max;
     float res;
-
+    max = atoi(argv[1]);
     s = socket(AF_INET, SOCK_DGRAM, 0);
     /* rellena la dirección del servidor */
     bzero((char *)&msg_to_server_addr, sizeof(msg_to_server_addr));
@@ -29,7 +30,7 @@ int main(void)
     client_addr.sin_port = htons(0);
     bind(s, (struct sockaddr *)&client_addr,sizeof(client_addr));
 
-    for(num = 1; num <= 25; num++){
+    for(num = 1; num <= max; num++){
         sendto(s, (int *)&num, sizeof(int), 0, (struct sockaddr *) &msg_to_server_addr, sizeof(msg_to_server_addr));
     }
     num = 0;
@@ -37,6 +38,7 @@ int main(void)
 
     /* se bloquea esperando respuesta */
     recvfrom(s, (int *)&res, sizeof(int), 0, NULL, NULL);
+    printf("Paquetes enviados: %d\n", max);
     printf("Paquetes perdidos: %f\n",res);
     printf("Porcentaje de paquetes enviados: %f\n", 100 - (res * 100) / 25);
     close(s);
