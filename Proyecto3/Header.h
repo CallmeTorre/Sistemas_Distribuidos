@@ -17,6 +17,9 @@ struct mensaje{
     long opcode;
     long count;
     long offset;
+    unsigned int requestId; //Identificador del mensaje
+    char IP[16];
+    int puerto;
 
     long extra_1;
     long extra_2;

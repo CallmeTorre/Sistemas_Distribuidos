@@ -18,6 +18,6 @@ class PaqueteDatagrama {
 		char ip[16]; //Almacena la IP
 		unsigned int longitud; //Almacena la longitude de la cadena de datos
 		int puerto; //Almacena el puerto
-}; 
+};
 
 #endif
