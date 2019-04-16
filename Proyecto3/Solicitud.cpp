@@ -29,9 +29,9 @@ char * Solicitud::doOperation(char *IP, int puerto, int operationId, char *name)
 	if(operationId == GET){
 		PaqueteDatagrama datagrama = PaqueteDatagrama((char *)&men, sizeof(men), IP, puerto);
 		socketlocal->envia(datagrama);
-		destino = open("cositas2.txt", O_WRONLY|O_TRUNC|O_CREAT, 0666);
+		destino = open(name, O_WRONLY|O_TRUNC|O_CREAT, 0666);
 		if(destino == -1){
-			perror("cositas2.txt");
+			perror(name);
 			exit(-1);
 		}
 		while(true){
@@ -54,6 +54,7 @@ char * Solicitud::doOperation(char *IP, int puerto, int operationId, char *name)
             exit(-1);
         }
 		while(true){
+
             nbytes = read(origen, buffer, sizeof buffer);
             if(nbytes > 0){
 				memcpy(men.data, buffer, strlen(buffer)+1);
