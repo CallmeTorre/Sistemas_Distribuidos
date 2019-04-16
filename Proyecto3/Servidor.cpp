@@ -38,7 +38,7 @@ int main()
     }
     else if(recibido->opcode == POST){
         printf("POST Operation\n");
-        destino = open("cositas3.txt", O_WRONLY|O_TRUNC|O_CREAT, 0666);
+        destino = open(nombreArchivo, O_WRONLY|O_TRUNC|O_CREAT, 0666);
         if(destino == -1){
 			perror("cositas2.txt");
 			exit(-1);
