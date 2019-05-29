@@ -12,11 +12,15 @@ int main(int argc, char const *argv[]){
     socket.envia(datagramaEnvia);
     PaqueteDatagrama datagramaRecibe =  PaqueteDatagrama(sizeof(int));
     for(;;){
-        socket.recibe(datagramaRecibe);
-        int * res = (int * ) datagramaRecibe.obtieneDatos();
-        cout << "Cliente: " << datagramaRecibe.obtieneDireccion() << endl;
-        cout << "Puerto: " << datagramaRecibe.obtienePuerto() << endl;
-        cout << nums[0] << " + " << nums[1] << " = " << *res <<endl;
+        if(socket.recibe(datagramaRecibe) > 0){
+            int * res = (int * ) datagramaRecibe.obtieneDatos();
+            cout << "Cliente: " << datagramaRecibe.obtieneDireccion() << endl;
+            cout << "Puerto: " << datagramaRecibe.obtienePuerto() << endl;
+            cout << nums[0] << " + " << nums[1] << " = " << *res <<endl;
+        }
+        else{
+            break;
+        }
     }
     return 0;
 }
