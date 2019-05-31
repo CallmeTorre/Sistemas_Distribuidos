@@ -27,9 +27,9 @@ static string discoverServers(char* ip){
     PaqueteDatagrama datagramaRecibe =  PaqueteDatagrama(sizeof(int));
     while(socket.recibe(datagramaRecibe) > 0){
         auto fin = chrono::high_resolution_clock::now();
-		string cliente(datagramaRecibe.obtieneDireccion());
 		int latencia(chrono::duration_cast<chrono::nanoseconds>(fin- ini).count());
-		result += cliente + " - " + std::to_string(latencia) + " ms.";
+		string cliente(datagramaRecibe.obtieneDireccion());
+		result += cliente + " - " + std::to_string(latencia) + " ns. <br/>";
     }
 	return result;
 }
@@ -53,7 +53,7 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
 		if (mg_vcmp(&hm->uri, "/search") == 0) {
 
 			mg_get_http_var(&hm->body, "query", query,sizeof(query));
-			printf("Cadena introducida: %s\n",query);
+			printf("IP introducida: %s\n",query);
 
 		    handle_size(nc, hm);
 		}else{
